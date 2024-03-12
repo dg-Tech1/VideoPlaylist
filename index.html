@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin-top: -100px;
+}
+  #player {
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  /*select#videoList {
+    background-color: red;
+} */
+</style>
+</head>
+<body>
+
+<h2>Playlist YouTube</h2>
+
+<div id="player"></div>
+
+<select id="videoList" onchange="playVideo()">
+  <option value="dQw4w9WgXcQ">Vidéo 1</option>
+  <option value="uPudE8nDog0">Vidéo 2</option>
+  <option value="H1HdZFgR-aA">Vidéo 3</option>
+  <option value="0YhXGXdtBfM">Vidéo 4</option>
+  <option value="pEskP0ulPlA">Vidéo 5</option>
+  <option value="d4JnshyKOOQ">Vidéo 6</option>
+  <option value="s6oT995WAfw">Vidéo 7</option>
+  <option value="ea sport">Vidéo 8</option>
+  <option value="QdBZY2fkU-0">Vidéo 9</option>
+  <option value="HSva2HlPHTs">Vidéo 10</option>
+</select>
+
+<script>
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '390',
+      width: '100%',
+      videoId: document.getElementById('videoList').value,
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+      player.loadVideoById(document.getElementById('videoList').value);
+    }
+  }
+
+  function playVideo() {
+    player.loadVideoById(document.getElementById('videoList').value);
+  }
+</script>
+
+</body>
+</html>
